@@ -285,3 +285,19 @@ orchestrate-pnda-install_remove_new_node_markers:
     - sls: orchestrate.remove_new_node_marker
     - timeout: 120
     - queue: True
+
+orchestrate-pnda-oozie-ssh_keygen:
+  salt.state:
+    - tgt: 'G@pnda_cluster:{{pnda_cluster}} and G@roles:oozie_database'
+    - tgt_type: compound
+    - sls: oozie_ssh_auth
+    - timeout: 120
+    - queue: True
+
+orchestrate-pnda-oozie-install_keys:
+  salt.state:
+    - tgt: 'G@pnda_cluster:{{pnda_cluster}} and G@roles:deployment_manager'
+    - tgt_type: compound
+    - sls: oozie_ssh_auth.add_to_authorized_keys
+    - timeout: 120
+    - queue: True
